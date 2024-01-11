@@ -7,7 +7,7 @@ def calculate_file_hash(file_path):
     """Calculate the SHA256 hash of a file."""
     sha256 = hashlib.sha256()
     with open(file_path, 'rb') as f:
-        while chunk := f.read(8192):  # Using the walrus operator (Python 3.8+)
+        while chunk := f.read(8192):
             sha256.update(chunk)
     return sha256.hexdigest()
 
@@ -45,28 +45,27 @@ def scan_directory(directory_path, signature_database):
     return infected_files
 
 if __name__ == '__main__':
-    # URL containing hash signatures
+  
     signature_database_url = 'https://virusshare.com/hashfiles/VirusShare_00000.md5'
 
     try:
-        # Fetch hash signatures from the URL
+        
         signature_database = fetch_hashes_from_url(signature_database_url)
         print("Signature database loaded successfully.")
 
-        # Ask the user for the path to scan
-        user_input = input("Enter the path of the file or folder to scan: ")
-        path_to_scan = os.path.expanduser(user_input)  # Expand the user's home directory (~)
 
+        user_input = input("Enter the path of the file or folder to scan: ")
+        path_to_scan = os.path.expanduser(user_input)  
         if os.path.exists(path_to_scan):
             if os.path.isfile(path_to_scan):
-                # If it's a file, scan the file
+                
                 result = scan_file(path_to_scan, signature_database)
                 if result:
                     print(result)
                 else:
                     print("File is clean and has no viruses!")
             elif os.path.isdir(path_to_scan):
-                # If it's a directory, scan all files in the directory
+
                 infected_files = scan_directory(path_to_scan, signature_database)
                 if infected_files:
                     for infected_file in infected_files:
