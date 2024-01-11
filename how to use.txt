@@ -1,0 +1,5 @@
+﻿How to use:
+
+Step 1: Download python from python.org
+Step 2: After Launching wait a few seconds so it loads
+Step 3: Enter the directory of the file or folder to scan
